@@ -1,7 +1,7 @@
 from functools import lru_cache
 from pinecone import Pinecone, ServerlessSpec
 from openai import OpenAI
-from config import settings
+from .config import settings
 
 @lru_cache
 def clients():
@@ -22,4 +22,12 @@ def embed(text):
     return [ x.embedding for x in o.embeddings.create(input = text, model = settings.openai_embed_model).data]
     
 
+def search(query, top_k = 5):
+    index = ensure_index()
+    vector = embed(query)[0]
+    result = index.query(vector = vector,top_k = top_k, include_metadata= True)
+    return result.get('matches',[])
+
 # print(embed(["what is your name","How are you"])[0])
+
+# print(search(["what is your name","How are you"]))
