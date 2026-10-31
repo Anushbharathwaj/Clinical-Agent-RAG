@@ -34,3 +34,6 @@ uv add \
 -From Root Folder
 
 python3 -m app.agent 
+
+# Run 
+uvicorn app.main:app --reload --host 127.0.0.1 --port 8000

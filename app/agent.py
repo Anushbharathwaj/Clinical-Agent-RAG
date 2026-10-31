@@ -62,7 +62,7 @@ def answer(State):
     for msg in State.get('history',[])[-8:]:
         history.append(HumanMessage(content = msg['content']) if msg['role'] == 'user' else AIMessage(content = msg['content']))
     user = f"Question: {State['question']}\nVisual observations (not diagnosis): {State.get('image_description','None')}\nHistorical PDF excerpts:\n{context or 'No relevant PDF excerpts'}\nExternal results:\n{website or 'No external results'}"
-    llm = ChatOpenAI(model = settings.openai_chat_model, api_key = settings.openai_api_key, temperature = 0.1 , max_reties = 1, timeout = 45)
+    llm = ChatOpenAI(model = settings.openai_chat_model, api_key = settings.openai_api_key, temperature = 0.1 , max_retries = 2, timeout = 45)
     response = llm.invoke([SystemMessage(content = SYSTEM), *history, HumanMessage(content = user)])
     return {'answer' : response.content}
 

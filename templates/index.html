@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clinical Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Sora:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css?v=5">
+</head>
+<body>
+  <div class="bg" aria-hidden="true"><b></b><b></b><b></b></div>
+
+  <div class="app">
+
+    <aside class="side" id="side">
+      <div class="brand">
+        <i data-lucide="stethoscope"></i>
+        <span>Clinical Agent</span>
+      </div>
+
+      <div class="status" id="statusPill" data-state="checking">
+        <span class="dot"></span><span id="statusText">Checking…</span>
+      </div>
+
+      <button class="btn ghost full" id="newChat"><i data-lucide="square-pen"></i>New chat</button>
+
+      <section class="panel">
+        <h2>Connected tools</h2>
+        <ul class="tools">
+          <li><i data-lucide="database"></i>Medical book<b id="tKb" class="off">off</b></li>
+          <li><i data-lucide="globe"></i>Web search<b id="tWeb" class="off">off</b></li>
+          <li><i data-lucide="eye"></i>Image reading<b id="tVision" class="off">off</b></li>
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>Access</h2>
+        <label class="field">
+          <span>API token (if your server needs one)</span>
+          <input type="password" id="token" autocomplete="new-password" placeholder="Paste token">
+          <small class="hint" id="tokenHint">Kept for 1 hour. Cleared when you refresh.</small>
+        </label>
+      </section>
+
+      <p class="note">
+        Educational triage help, not a doctor. The uploaded book is from 2002 and covers A–B only.
+        For severe chest pain, stroke signs, trouble breathing or heavy bleeding, call emergency services now.
+      </p>
+    </aside>
+
+    <main class="main">
+      <header class="top">
+        <button class="icon-btn menu" id="menu" aria-label="Open menu"><i data-lucide="menu"></i></button>
+        <h1>Ask a health question</h1>
+        <button class="pill" id="camBtn"><i data-lucide="camera"></i><span>Take photo</span></button>
+      </header>
+
+      <div class="speakbar" id="speakBar" hidden>
+        <span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+        <span id="speakText">Speaking…</span>
+        <button class="btn ghost" id="speakStop"><i data-lucide="square"></i>Stop</button>
+      </div>
+
+      <div class="chat" id="chat" aria-live="polite">
+        <div class="empty" id="empty">
+          <h2>What would you like to understand?</h2>
+          <p>Ask by typing or dictating, attach a photo, or take one with your camera.</p>
+          <div class="chips">
+            <button class="chip">What is acid phosphatase?</button>
+            <button class="chip">What are the latest hypertension guidelines?</button>
+            <button class="chip">Explain what an abscess is</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="composer">
+        <div class="preview" id="preview" hidden>
+          <img id="previewImg" alt="Attached photo">
+          <button class="icon-btn" id="removeImg" aria-label="Remove photo"><i data-lucide="x"></i></button>
+        </div>
+
+        <div class="recbar" id="recBar" hidden>
+          <span class="recdot" aria-hidden="true"></span>
+          <span id="recText">Microphone is on. Listening…</span>
+          <div class="meter"><i id="level"></i></div>
+          <span class="gather small" id="recSpin" hidden role="status" aria-label="Transcribing"><i></i><i></i><i></i><i></i></span>
+          <button class="btn ghost" id="recCancel"><i data-lucide="x"></i>Cancel</button>
+          <button class="btn solid" id="recDone"><i data-lucide="check"></i>Done</button>
+        </div>
+
+        <div class="row" id="row">
+          <input type="file" id="file" accept="image/jpeg,image/png,image/webp" hidden>
+          <button class="icon-btn" id="attach" aria-label="Attach photo"><i data-lucide="image-plus"></i></button>
+          <textarea id="input" rows="1" maxlength="4000" placeholder="Type your question"></textarea>
+          <button class="icon-btn" id="mic" aria-label="Dictate"><i data-lucide="mic"></i></button>
+          <button class="send" id="send" aria-label="Send"><i data-lucide="arrow-up"></i></button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <dialog class="cam" id="camDlg">
+    <video id="camVideo" autoplay playsinline muted></video>
+    <p id="camErr" hidden></p>
+    <div class="cambar">
+      <button class="btn ghost" id="camClose">Cancel</button>
+      <button class="shutter" id="camShot" aria-label="Take photo"></button>
+      <button class="btn ghost" id="camFlip"><i data-lucide="switch-camera"></i>Flip</button>
+    </div>
+  </dialog>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+  <script src="/static/app.js?v=5"></script>
+</body>
+</html>

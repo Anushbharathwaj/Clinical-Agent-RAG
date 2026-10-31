@@ -26,7 +26,8 @@ def search(query, top_k = 5):
     index = ensure_index()
     vector = embed(query)[0]
     result = index.query(vector = vector,top_k = top_k, include_metadata= True)
-    return result.get('matches',[])
+    
+    return [match.to_dict() for match in result.get('matches', [])]
 
 # print(embed(["what is your name","How are you"])[0])
 
